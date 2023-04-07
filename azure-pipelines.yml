@@ -12,7 +12,7 @@ variables:
   azureSubscription: '076c9449-f0fe-463d-8570-6daed2c27065'
 
   # Web app name
-  webAppName: 'mySuperAwesomeApp'
+  webAppName: 'haroondev'
 
   # Environment name
   environmentName: 'mySuperAwesomeApp'
@@ -30,6 +30,16 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
     - task: Maven@3
       displayName: 'Maven Package'
       inputs:
